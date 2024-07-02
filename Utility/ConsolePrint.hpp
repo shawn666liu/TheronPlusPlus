@@ -63,7 +63,7 @@ namespace Theron
 ******************************************************************************/
 
 class [[deprecated("Console print server should not be used only use ConsoleOutput")]]
-ConsolePrintServer : public virtual Actor,
+THERON_API ConsolePrintServer : public virtual Actor,
 										 public virtual StandardFallbackHandler
 {
 public:
@@ -269,7 +269,7 @@ public:
     };
 };
 */
-class ConsoleOutput 
+class THERON_API ConsoleOutput 
 : public std::osyncstream
 {
 public:
@@ -280,7 +280,7 @@ public:
 };
 
 class [[deprecated("Use ConsoleOutput instead of ConsolePrint") ]]
-ConsolePrint : public ConsoleOutput
+THERON_API ConsolePrint : public ConsoleOutput
 {
 public:
   ConsolePrint() = default;
@@ -290,7 +290,7 @@ public:
 // console printing. For more advanced features, the Google logging framework
 // is recommended, see https://github.com/google/glog
 
-class ConsoleLog
+class THERON_API ConsoleLog
 : public std::osyncstream
 {
 public:

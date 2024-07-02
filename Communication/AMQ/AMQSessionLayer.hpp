@@ -48,7 +48,7 @@ namespace Theron::AMQ
 // messsage as the external message type to be exchanged with the Network 
 // Layer.
 
-class SessionLayer
+class THERON_API SessionLayer
 : virtual public Actor,
   virtual public StandardFallbackHandler,
 	virtual public Theron::SessionLayer< AMQ::Message >

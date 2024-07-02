@@ -100,7 +100,7 @@ class PresentationLayer;
 // handler for the shut down message whose functionality must be implemented
 // by the endpoint.
 
-class Network
+class THERON_API Network
 : virtual public Actor,
   virtual public StandardFallbackHandler
 {

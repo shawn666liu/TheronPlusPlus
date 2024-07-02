@@ -42,7 +42,7 @@ License: LGPL 3.0 (https://www.gnu.org/licenses/lgpl-3.0.en.html)
 namespace Theron
 {
 
-class StandardFallbackHandler : public virtual Actor
+class THERON_API StandardFallbackHandler : public virtual Actor
 {
 private:
   

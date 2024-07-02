@@ -9,7 +9,10 @@ License: LGPL 3.0
 #include <functional>							             // Run-time functions
 
 #include "Actor.hpp"							             // The Actor definition
+
+#ifdef __THERON_USE_PRESENTATION_LAYER__
 #include "Communication/PresentationLayer.hpp" // The Presentation Layer
+#endif
 
 // In the case that this is compiled with a GNU compiler the actor's postman
 // thread will be named with the actor's name.
@@ -39,8 +42,10 @@ std::unordered_map< Theron::Actor::Identification::IDType,
 
 std::recursive_mutex Theron::Actor::Identification::InformationAccess;
 
+#ifdef __THERON_USE_PRESENTATION_LAYER__
 std::set< Theron::Actor::Address >
 Theron::Actor::Identification::PresentationLayerServers;
+#endif
 
 // For compatibility reasons there is a global framework pointer
 
@@ -72,7 +77,11 @@ Theron::Framework * Theron::Actor::GlobalFramework = nullptr;
 void Theron::Actor::Identification::SetPresentationLayerServer(
                                     const Address & ThePresentationLayerSever )
 {
+#ifdef __THERON_USE_PRESENTATION_LAYER__
   PresentationLayerServers.insert( ThePresentationLayerSever );
+#else
+  throw std::logic_error("please define __THERON_USE_PRESENTATION_LAYER__ to use this");
+#endif
 }
 
 // Creating an Identification object is subject to an initial verification that
@@ -133,10 +142,11 @@ Theron::Actor::Address Theron::Actor::Identification::Create(
 
   if ( TheActor != nullptr )
   {
-    if ((TheActorID->ActorPointer == nullptr) ||
-        (( !PresentationLayerServers.empty() ) &&
-         ( TheActorID->ActorPointer ==
-             PresentationLayerServers.begin()->get()->ActorPointer) ) )
+    if ((TheActorID->ActorPointer == nullptr) 
+#ifdef __THERON_USE_PRESENTATION_LAYER__
+    || (( !PresentationLayerServers.empty() ) &&( TheActorID->ActorPointer == PresentationLayerServers.begin()->get()->ActorPointer) ) 
+#endif             
+             )
       TheActorID->ActorPointer = TheActor;
     else if( TheActor != TheActorID->ActorPointer )
     {
@@ -151,9 +161,11 @@ Theron::Actor::Address Theron::Actor::Identification::Create(
       throw std::logic_error( ErrorMessage.str() );
     }
   }
+#ifdef __THERON_USE_PRESENTATION_LAYER__
   else if ( !PresentationLayerServers.empty() )
     TheActorID->ActorPointer =
       PresentationLayerServers.begin()->get()->ActorPointer;
+#endif      
 
   // At this point the Identification pointer is correctly set, and the
   // address constructed from its shared pointer can be returned.
@@ -248,6 +260,7 @@ void Theron::Actor::Identification::ClearActor(
 {
   std::lock_guard< std::recursive_mutex > Lock( InformationAccess );
 
+#ifdef __THERON_USE_PRESENTATION_LAYER__
   if ( ActorAddress == *PresentationLayerServers.begin() )
   {
     Actor * NewHandler = nullptr;
@@ -262,6 +275,7 @@ void Theron::Actor::Identification::ClearActor(
         TheID.second->ActorPointer = NewHandler;
   }
   else
+#endif  
     ActorAddress->ActorPointer = nullptr;
 }
 
@@ -275,8 +289,12 @@ void Theron::Actor::Identification::ClearActor(
 
 bool Theron::Actor::Identification::AllowRouting( void )
 {
-  return ( ActorPointer != nullptr ) ||
-         ( !PresentationLayerServers.empty() ) ;
+  return ( ActorPointer != nullptr )
+#ifdef __THERON_USE_PRESENTATION_LAYER__
+   ||         ( !PresentationLayerServers.empty() ) 
+#endif
+   ;
+
 }
 
 // -----------------------------------------------------------------------------

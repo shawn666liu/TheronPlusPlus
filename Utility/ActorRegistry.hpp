@@ -41,7 +41,7 @@ License: LGPL 3.0
 namespace Theron
 {
 
-class ActorRegistry : public virtual Theron::Actor,
+class THERON_API ActorRegistry : public virtual Theron::Actor,
 											public virtual Theron::StandardFallbackHandler
 {
 private:

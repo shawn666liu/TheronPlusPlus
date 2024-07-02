@@ -767,4 +767,9 @@ NetworkLayer::~NetworkLayer( void )
   Stop( Network::ShutDown(), GetAddress() );
 }
 
+std::shared_ptr< NetworkLayer::AMQProperties > DefaultOptions( void )
+{
+  return std::shared_ptr< NetworkLayer::AMQProperties >();
+}
+
 } // End name space Theron AMQ

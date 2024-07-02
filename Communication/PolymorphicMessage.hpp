@@ -90,7 +90,7 @@ namespace Theron
 // It also defines a error information function that should be overloaded by 
 // the polymorphic message to indicate the payload type in the error reporting
 
-class PolymorphicProtocolHandler
+class THERON_API PolymorphicProtocolHandler
 {
 protected:
   

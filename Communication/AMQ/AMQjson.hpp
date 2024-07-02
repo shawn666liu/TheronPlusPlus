@@ -60,7 +60,7 @@ namespace Theron::AMQ
 
 ==============================================================================*/
 
-class JSONMessage
+class THERON_API JSONMessage
 : virtual public Theron::PolymorphicMessage<typename Theron::AMQ::Message::PayloadType>,
   virtual public JSON
 {
@@ -176,7 +176,7 @@ public:
 // the message will be forwarded for decoding using the normal initialiser 
 // function above.
 
-class JSONTopicMessage
+class THERON_API JSONTopicMessage
 : virtual public JSON,
   public JSONMessage
 {
@@ -233,7 +233,7 @@ public:
 // unique name for a particular sensor. Then the unique message identifier 
 // could be "value.for.sensor" and thereby catch all published sensor values.
 
-class JSONWildcardMessage
+class THERON_API JSONWildcardMessage
 : public JSONMessage
 {
 protected:

@@ -94,9 +94,11 @@ License: LGPL 3.0 (https://www.gnu.org/licenses/lgpl-3.0.en.html)
 namespace Theron::AMQ
 {
 // Setting the hard coded topic for all endpoints to listen to.
-
+#if defined(_WIN32) && defined(_MSC_VER)
+static const std::string DiscoveryTopic{ "TheronPlusPlus" };
+#else
 constexpr std::string DiscoveryTopic{ "TheronPlusPlus" };
-  
+#endif  
 /*==============================================================================
 
  Network layer
@@ -111,7 +113,7 @@ constexpr std::string DiscoveryTopic{ "TheronPlusPlus" };
 // it is therefore a messaging handler even though it also encapsulates the 
 // other communication objects.
 
-class NetworkLayer
+class THERON_API NetworkLayer
 : virtual public Actor,
   virtual public StandardFallbackHandler,
   virtual public Theron::NetworkLayer< Message >,
@@ -488,10 +490,14 @@ public:
 // In order to set the default options conveniently, there is a small helper 
 // function that simply returns a smart pointer to the default options class
 
-constexpr std::shared_ptr< NetworkLayer::AMQProperties > DefaultOptions( void )
+#if defined(_WIN32) && defined(_MSC_VER)
+THERON_API std::shared_ptr< NetworkLayer::AMQProperties > DefaultOptions( void );
+#else
+constexpr THERON_API std::shared_ptr< NetworkLayer::AMQProperties > DefaultOptions( void )
 {
   return std::shared_ptr< NetworkLayer::AMQProperties >();
 }
+#endif
 
 
 }       // End name space AMQ

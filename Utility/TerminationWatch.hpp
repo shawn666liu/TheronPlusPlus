@@ -54,7 +54,7 @@ License: LGPL 3.0
 namespace Theron
 {
 
-class TerminationWatch : virtual public Receiver
+class THERON_API TerminationWatch : virtual public Receiver
 {
 private:
 

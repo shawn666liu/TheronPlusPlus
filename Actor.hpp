@@ -1,4 +1,4 @@
-/*=============================================================================
+﻿/*=============================================================================
 Actor
 
 This is a minimalistic implementation of the actor system aiming to rectify
@@ -29,6 +29,23 @@ License: LGPL 3.0
 
 #ifndef THERON_REPLACEMENT_ACTOR
 #define THERON_REPLACEMENT_ACTOR
+
+#if defined(_WIN64) || defined(_WIN32) || defined(_WINDOWS)
+#ifdef THERON_EXPORTS
+#define THERON_API __declspec(dllexport)
+#else
+#define THERON_API __declspec(dllimport)
+#endif
+#else
+#define THERON_API
+#endif
+
+
+#if defined(_MSC_VER)
+#pragma warning (disable: 4251)		// 需要有 dll 接口...
+#pragma warning (disable: 4275)		// 非 dll 接口 class“Theron::Detail::Entry::Entity”用作 dll 接口 class“Theron::Framework”的基
+#endif
+
 
 #include <string>									 // Strings
 #include <memory>									 // Smart pointers
@@ -85,7 +102,7 @@ class PolymorphicProtocolHandler;
 // In this implementation everything is an actor as there is no compelling
 // reason for the other Theron classes.
 
-class Actor
+class THERON_API Actor
 {
 /*=============================================================================
 
@@ -182,7 +199,7 @@ class Address;
 // for this it should inherit a particular base class.
 
 private:
-class Identification : public std::enable_shared_from_this< Identification >
+class THERON_API Identification : public std::enable_shared_from_this< Identification >
 {
 public:
 
@@ -613,7 +630,7 @@ inline static void SetPresentationLayerServer(
 
 protected:
 
-class GenericMessage
+class THERON_API GenericMessage
 {
 public:
 
@@ -1522,7 +1539,7 @@ using Address = Actor::Address;
 
 // The Endpoint class really only stores the name of this endpoint
 
-class EndPoint
+class THERON_API EndPoint
 {
 public:
 
@@ -1562,7 +1579,7 @@ public:
 // The Framework has a set of parameters mainly concerned with the the
 // scheduling of actors, which is here left for the operating system entirely
 
-class Framework : virtual public Actor
+class THERON_API Framework : virtual public Actor
 {
 public:
 
@@ -1675,7 +1692,7 @@ public:
 // combined to extend other actors (provided that they also inherit the actor
 // as a virtual base class).
 
-class Receiver : public virtual Actor
+class THERON_API Receiver : public virtual Actor
 {
 private:
 

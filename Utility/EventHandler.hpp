@@ -55,7 +55,7 @@ namespace Theron
 // data class.
 //
 
-class EventData
+class THERON_API EventData
 {
 protected:
 	
@@ -390,7 +390,7 @@ public:
 // It takes an address to the event manager in order to subscribe to events 
 // when it is created, and un-subscribe when it is deleted.
 
-class NowCounter : public Receiver
+class THERON_API NowCounter : public Receiver
 {
 protected:
 	

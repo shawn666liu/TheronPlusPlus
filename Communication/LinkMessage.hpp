@@ -57,7 +57,7 @@ namespace Theron
 // How the actor string and the endpoint string will be combined is protocol 
 // dependent.
 
-class GlobalAddress
+class THERON_API GlobalAddress
 {
 protected:
 

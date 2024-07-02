@@ -45,7 +45,7 @@ namespace Theron::AMQ
 // addresses. Thus the external address i defined analogous to the Jabber ID
 // as "actor@endpoint".
 
-class GlobalAddress
+class THERON_API GlobalAddress
 : public Theron::GlobalAddress
 {
 public:
@@ -104,7 +104,7 @@ public:
 // The AMQ topic names are just standard strings, but defined as a class to 
 // admit implicit conversion from string views.
 
-class TopicName 
+class THERON_API TopicName 
 : public std::string
 {
 public:
@@ -147,7 +147,7 @@ public:
 // The message definition can in this case nicely be implemented by the standard
 // Link Message. 
 
-class Message 
+class THERON_API Message 
 : public LinkMessage< GlobalAddress, std::shared_ptr< proton::message > >
 {
 public:

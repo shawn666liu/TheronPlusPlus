@@ -85,7 +85,7 @@ namespace Theron
 // are therefore defined in a separate base class inherited by the external
 // message specific Session Layer template.
 
-class SessionLayerMessages
+class THERON_API SessionLayerMessages
 {
   // ---------------------------------------------------------------------------
   // Messages TO the Session Layer
@@ -242,7 +242,11 @@ public:
              std::convertible_to< std::ranges::range_reference_t< RangeType >, 
                                   Address >
     PeerRemoved( RangeType && AddressRange )
+#if defined(_WIN32) && defined(_MSC_VER)
+    : std::set< Address >( AddressRange.cbegin(),  AddressRange.cend())
+#else
     : std::set< Address >( AddressRange )
+#endif
     {}
     #else
     template< class RangeType >

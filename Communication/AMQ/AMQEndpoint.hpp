@@ -117,7 +117,7 @@ namespace Theron::AMQ
 // The network class is responsible for creating the different layer servers
 // using the framework of the generic network class.
 
-class Network
+class THERON_API Network
 : virtual public Actor,
   virtual public StandardFallbackHandler,
   public Theron::Network
